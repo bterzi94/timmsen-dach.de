@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Timmsen Dach – Ihr Fachbetrieb für Dachdeckerarbeiten in Schleswig-Holstein" />
+  <title>Timmsen Dach | Dachdecker Fachbetrieb</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Cabin:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       DESIGN TOKENS — Elevate System (timmsen-dach.de)
+    ============================================================ */
+    :root {
+      --color-brand:      #fc362d;
+      --color-dark:       #0c0407;
+      --color-white:      #ffffff;
+      --color-muted:      #636363;
+      --color-bg-light:   #f8f8f8;
+      --color-bg-accent:  #fde8e6;
+      --color-border:     #e8e8e8;
+
+      --font-display: 'Sora', sans-serif;
+      --font-body:    'Cabin', sans-serif;
+      --font-ui:      'Poppins', sans-serif;
+
+      --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;
+      --space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;
+      --space-12:48px;--space-16:64px;
+
+      --radius-sm:4px;--radius-md:8px;--radius-lg:16px;
+      --radius-xl:24px;--radius-full:9999px;
+
+      --shadow-card:  0 2px 16px rgba(0,0,0,0.08);
+      --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
+      --nav-height:   60px;
+
+      --transition-fast: 150ms ease-out;
+      --transition-base: 250ms ease-out;
+    }
+
+    /* ============================================================
+       RESET
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      color: var(--color-dark);
+      background: var(--color-white);
+      line-height: 1.5;
+      /* Simulate mobile viewport in browser */
+      max-width: 390px;
+      margin: 0 auto;
+      position: relative;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    button { border: none; background: none; cursor: pointer; font-family: inherit; }
+
+    /* ============================================================
+       NAVIGATION
+       - Fixed top, dark bg
+       - Logo left | Hamburger right
+       - Safe area: env(safe-area-inset-top)
+       - Touch targets: 44×44px minimum
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 390px;
+      z-index: 100;
+      background: var(--color-dark);
+      padding: env(safe-area-inset-top, 0px) var(--space-5) 0;
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-height);
+    }
+
+    /* Logo */
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      text-decoration: none;
+    }
+    .nav__logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--color-brand);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .nav__logo-text {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-white);
+      letter-spacing: -0.01em;
+      line-height: 1;
+    }
+    .nav__logo-text span {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 10px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-top: 1px;
+    }
+
+    /* Hamburger — 44×44px touch target */
+    .nav__burger {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      border-radius: var(--radius-md);
+      transition: background var(--transition-fast);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .nav__burger:active { background: rgba(255,255,255,0.08); }
+    .nav__burger-line {
+      width: 22px;
+      height: 2px;
+      background: var(--color-white);
+      border-radius: var(--radius-full);
+      transition: transform var(--transition-base), opacity var(--transition-fast);
+      transform-origin: center;
+    }
+    /* Open state */
+    .nav__burger.is-open .nav__burger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav__burger.is-open .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+    .nav__burger.is-open .nav__burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* ============================================================
+       MOBILE MENU DRAWER
+    ============================================================ */
+    .nav__drawer {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 390px;
+      height: 100dvh;
+      background: var(--color-dark);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      padding: calc(var(--nav-height) + env(safe-area-inset-top, 0px) + var(--space-8)) var(--space-6) var(--space-8);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity var(--transition-base);
+    }
+    .nav__drawer.is-open { opacity: 1; pointer-events: all; }
+
+    .nav__drawer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+      flex: 1;
+    }
+    .nav__drawer-links a {
+      display: block;
+      padding: var(--space-4) 0;
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color var(--transition-fast);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .nav__drawer-links a:active { color: var(--color-brand); }
+    .nav__drawer-cta {
+      margin-top: var(--space-8);
+    }
+
+    /* ============================================================
+       HERO SECTION
+       Offset for fixed nav
+    ============================================================ */
+    .hero {
+      padding-top: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
+      background: var(--color-white);
+      overflow: hidden;
+    }
+
+    /* ── Top Bar: Trust Signal ── */
+    .hero__trust {
+      background: var(--color-bg-accent);
+      padding: var(--space-2) var(--space-5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+    }
+    .hero__trust-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--color-brand);
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.6; transform: scale(1.3); }
+    }
+    .hero__trust-text {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--color-brand);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Content ── */
+    .hero__content {
+      padding: var(--space-8) var(--space-5) var(--space-6);
+    }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(252,54,45,0.08);
+      border: 1px solid rgba(252,54,45,0.15);
+      color: var(--color-brand);
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 5px var(--space-3);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-5);
+    }
+    .badge__dot {
+      width: 5px; height: 5px;
+      background: var(--color-brand);
+      border-radius: 50%;
+    }
+
+    /* H1 */
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: 34px;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--color-dark);
+      margin-bottom: var(--space-4);
+    }
+    .hero__title em {
+      font-style: normal;
+      color: var(--color-muted);
+    }
+
+    /* Subtext */
+    .hero__sub {
+      font-size: 15px;
+      color: var(--color-muted);
+      line-height: 1.65;
+      margin-bottom: var(--space-6);
+    }
+
+    /* Features / Benefits */
+    .hero__features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+    .hero__feature {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .hero__feature-icon {
+      width: 22px;
+      height: 22px;
+      background: rgba(252,54,45,0.1);
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-brand);
+    }
+    .hero__feature-text {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-dark);
+    }
+    .hero__feature-text span {
+      color: var(--color-muted);
+      font-weight: 400;
+    }
+
+    /* ── Visual / Foto ── */
+    .hero__visual {
+      margin: 0 var(--space-5) var(--space-6);
+      position: relative;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: linear-gradient(145deg, #e8e4e0 0%, #d0cbc5 100%);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Placeholder image (replace with real <img>) */
+    .hero__visual-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      color: rgba(0,0,0,0.2);
+    }
+    .hero__visual-placeholder svg { opacity: 0.3; }
+    .hero__visual-placeholder p {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      opacity: 0.5;
+    }
+
+    /* Floating badge on image */
+    .hero__visual-chip {
+      position: absolute;
+      bottom: var(--space-4);
+      left: var(--space-4);
+      background: var(--color-dark);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      box-shadow: var(--shadow-strong);
+    }
+    .hero__visual-chip-avatars {
+      display: flex;
+    }
+    .hero__visual-chip-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--color-dark);
+      margin-left: -6px;
+      background: linear-gradient(135deg, var(--color-brand) 0%, #ff6b5b 100%);
+    }
+    .hero__visual-chip-avatar:first-child { margin-left: 0; }
+    .hero__visual-chip-avatar:nth-child(2) { background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); }
+    .hero__visual-chip-avatar:nth-child(3) { background: linear-gradient(135deg, #10b981 0%, #34d399 100%); }
+    .hero__visual-chip-info {}
+    .hero__visual-chip-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-white);
+      line-height: 1.2;
+    }
+    .hero__visual-chip-stars {
+      font-size: 9px;
+      color: #f59e0b;
+      letter-spacing: 0.5px;
+    }
+
+    /* Years badge (top right of image) */
+    .hero__visual-years {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      background: rgba(12,4,7,0.7);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-radius: var(--radius-lg);
+      padding: var(--space-3) var(--space-4);
+      text-align: center;
+    }
+    .hero__visual-years-number {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--color-brand);
+      line-height: 1;
+    }
+    .hero__visual-years-label {
+      font-family: var(--font-ui);
+      font-size: 9px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 2px;
+    }
+
+    /* ── CTAs ── */
+    .hero__cta {
+      padding: 0 var(--space-5) var(--space-10);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    /* Primary button — full width, pill, 52px height (≥44px touch) */
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      height: 52px;
+      background: var(--color-brand);
+      color: var(--color-white);
+      font-family: var(--font-ui);
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      border: none;
+      cursor: pointer;
+      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      text-decoration: none;
+    }
+    .btn-primary:active {
+      background: #e02d24;
+      transform: scale(0.98);
+      box-shadow: 0 4px 20px rgba(252,54,45,0.35);
+    }
+    .btn-primary__arrow {
+      transition: transform var(--transition-fast);
+    }
+    .btn-primary:active .btn-primary__arrow { transform: translateX(3px); }
+
+    /* Secondary — ghost/text link */
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      width: 100%;
+      height: 48px;
+      background: transparent;
+      color: var(--color-muted);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: var(--radius-full);
+      border: 1.5px solid var(--color-border);
+      cursor: pointer;
+      transition: border-color var(--transition-fast), color var(--transition-fast);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      text-decoration: none;
+    }
+    .btn-secondary:active {
+      border-color: var(--color-dark);
+      color: var(--color-dark);
+    }
+
+    /* ============================================================
+       UTILITY — prefers-reduced-motion
+    ============================================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVIGATION
+  ============================================== -->
+  <nav class="nav" role="navigation" aria-label="Hauptnavigation">
+    <div class="nav__inner">
+
+      <!-- Logo -->
+      <a href="/" class="nav__logo" aria-label="Timmsen Dach — Startseite">
+        <div class="nav__logo-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+            <polyline points="9,22 9,12 15,12 15,22"/>
+          </svg>
+        </div>
+        <div class="nav__logo-text">
+          Timmsen Dach
+          <span>Fachbetrieb seit 2010</span>
+        </div>
+      </a>
+
+      <!-- Hamburger -->
+      <button
+        class="nav__burger"
+        id="navBurger"
+        aria-label="Menü öffnen"
+        aria-expanded="false"
+        aria-controls="navDrawer"
+        onclick="toggleMenu()"
+      >
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+        <span class="nav__burger-line"></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="nav__drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
+    <ul class="nav__drawer-links">
+      <li><a href="pages/leistungen.html" onclick="toggleMenu()">Leistungen</a></li>
+      <li><a href="pages/referenzen.html" onclick="toggleMenu()">Referenzen</a></li>
+      <li><a href="pages/ueber-uns.html"  onclick="toggleMenu()">Über uns</a></li>
+      <li><a href="pages/kontakt.html"    onclick="toggleMenu()">Kontakt</a></li>
+    </ul>
+    <div class="nav__drawer-cta">
+      <a href="pages/kontakt.html" class="btn-primary" onclick="toggleMenu()">
+        Jetzt kostenlos anfragen
+        <svg class="btn-primary__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- =============================================
+       HERO SECTION
+  ============================================== -->
+  <main id="main-content">
+    <section class="hero" aria-labelledby="hero-headline">
+
+      <!-- Trust Bar -->
+      <div class="hero__trust" role="complementary" aria-label="Vertrauensbeweis">
+        <div class="hero__trust-dot" aria-hidden="true"></div>
+        <p class="hero__trust-text">Trusted by 150+ zufriedene Kunden in der Region</p>
+      </div>
+
+      <!-- Text Content -->
+      <div class="hero__content">
+
+        <!-- Badge -->
+        <div class="badge" aria-label="Kategorie: Dach & Bau Fachbetrieb">
+          <span class="badge__dot" aria-hidden="true"></span>
+          Dach &amp; Bau Fachbetrieb
+        </div>
+
+        <!-- H1 Headline -->
+        <h1 class="hero__title" id="hero-headline">
+          Ihr Dach in<br>
+          besten Händen —<br>
+          <em>Qualität seit 2010</em>
+        </h1>
+
+        <!-- Subtext -->
+        <p class="hero__sub">
+          Professionelle Dacharbeiten für Privat und Gewerbe. Termingerecht, sauber und mit 5 Jahren Garantie auf alle Ausführungen.
+        </p>
+
+        <!-- Features / Benefits -->
+        <ul class="hero__features" aria-label="Unsere Leistungsmerkmale">
+
+          <li class="hero__feature">
+            <div class="hero__feature-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <span class="hero__feature-text">
+              Kostenloser Vorab-Termin &amp; Angebot
+              <span> — binnen 24 Std.</span>
+            </span>
+          </li>
+
+          <li class="hero__feature">
+            <div class="hero__feature-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <span class="hero__feature-text">
+              5 Jahre Garantie
+              <span> auf alle Arbeiten</span>
+            </span>
+          </li>
+
+          <li class="hero__feature">
+            <div class="hero__feature-icon" aria-hidden="true">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20,6 9,17 4,12"/></svg>
+            </div>
+            <span class="hero__feature-text">
+              24h Notdienst
+              <span> bei Sturmschäden</span>
+            </span>
+          </li>
+
+        </ul>
+      </div>
+
+      <!-- Visual / Foto -->
+      <figure class="hero__visual" aria-label="Referenzprojekt: Dachsanierung Einfamilienhaus">
+
+        <!--
+          PLATZHALTER — ersetzen mit:
+          <img
+            src="assets/images/hero/dach-referenz.webp"
+            alt="Professionelle Dacheindeckung durch Timmsen Dach"
+            width="390" height="293"
+            loading="eager"
+            fetchpriority="high"
+          />
+        -->
+        <div class="hero__visual-placeholder" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <polyline points="21,15 16,10 5,21"/>
+          </svg>
+          <p>Foto einfügen</p>
+        </div>
+
+        <!-- Floating: Kundenbewertung -->
+        <div class="hero__visual-chip" aria-label="Kundenbewertung: 4.9 von 5 Sternen">
+          <div class="hero__visual-chip-avatars" aria-hidden="true">
+            <div class="hero__visual-chip-avatar"></div>
+            <div class="hero__visual-chip-avatar"></div>
+            <div class="hero__visual-chip-avatar"></div>
+          </div>
+          <div class="hero__visual-chip-info">
+            <div class="hero__visual-chip-label">100+ Kunden</div>
+            <div class="hero__visual-chip-stars" aria-label="5 von 5 Sternen">★★★★★</div>
+          </div>
+        </div>
+
+        <!-- Floating: Erfahrung -->
+        <div class="hero__visual-years" aria-label="12 Jahre Erfahrung">
+          <div class="hero__visual-years-number" aria-hidden="true">12+</div>
+          <div class="hero__visual-years-label">Jahre</div>
+        </div>
+
+      </figure>
+
+      <!-- CTAs -->
+      <div class="hero__cta">
+        <a
+          href="pages/kontakt.html"
+          class="btn-primary"
+          aria-label="Jetzt kostenlos anfragen — Kontaktformular öffnen"
+        >
+          Kostenlos anfragen
+          <svg class="btn-primary__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12,5 19,12 12,19"/>
+          </svg>
+        </a>
+        <a
+          href="pages/leistungen.html"
+          class="btn-secondary"
+          aria-label="Alle Leistungen ansehen"
+        >
+          Leistungen ansehen
+        </a>
+      </div>
+
+    </section>
+  </main>
+
+  <!-- =============================================
+       JAVASCRIPT — Menu Toggle
+  ============================================== -->
+  <script>
+    const burger = document.getElementById('navBurger');
+    const drawer = document.getElementById('navDrawer');
+    let menuOpen = false;
+
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      burger.classList.toggle('is-open', menuOpen);
+      drawer.classList.toggle('is-open', menuOpen);
+      burger.setAttribute('aria-expanded', menuOpen);
+      drawer.setAttribute('aria-hidden', !menuOpen);
+      // Prevent body scroll when menu open
+      document.body.style.overflow = menuOpen ? 'hidden' : '';
+    }
+
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && menuOpen) toggleMenu();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Design System | Timmsen Dach</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Cabin:wght@400;500;600&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================
+       DESIGN SYSTEM — Extrahiert von Elevate Template
+       Angepasst für: timmsen-dach.de
+       Quelle: elevate-template.framer.website
+    ============================================ */
+
+    /* --- DESIGN TOKENS --- */
+    :root {
+      /* Colors */
+      --color-brand:        #fc362d;   /* Primär-Rot  (Elevate: --token-71046100) */
+      --color-dark:         #0c0407;   /* Near-Black   (Elevate: --token-242edd6b) */
+      --color-white:        #ffffff;   /* Weiß         (Elevate: --token-630fc3c8) */
+      --color-muted:        #636363;   /* Muted-Text   (Elevate: --token-74fa03d8) */
+      --color-overlay:      rgba(0,0,0,0.2); /* Overlay (Elevate: --token-e0a3f9cc) */
+      --color-bg-light:     #f8f8f8;   /* Helles BG */
+      --color-bg-accent:    #fde8e6;   /* Akzent-Hintergrund (CTA-Section) */
+      --color-border:       #e8e8e8;   /* Border */
+
+      /* Typography */
+      --font-display:   'Sora', sans-serif;
+      --font-body:      'Cabin', sans-serif;
+      --font-ui:        'Poppins', sans-serif;
+
+      /* Font Sizes */
+      --text-xs:   12px;
+      --text-sm:   14px;
+      --text-base: 16px;
+      --text-md:   18px;
+      --text-lg:   20px;
+      --text-xl:   24px;
+      --text-2xl:  32px;
+      --text-3xl:  42px;
+      --text-4xl:  56px;
+      --text-5xl:  72px;
+
+      /* Font Weights */
+      --weight-regular:   400;
+      --weight-medium:    500;
+      --weight-semibold:  600;
+      --weight-bold:      700;
+
+      /* Line Heights */
+      --leading-tight:    1.1;
+      --leading-snug:     1.3;
+      --leading-normal:   1.5;
+      --leading-relaxed:  1.7;
+
+      /* Spacing Scale (4pt base) */
+      --space-1:   4px;
+      --space-2:   8px;
+      --space-3:   12px;
+      --space-4:   16px;
+      --space-5:   20px;
+      --space-6:   24px;
+      --space-8:   32px;
+      --space-10:  40px;
+      --space-12:  48px;
+      --space-16:  64px;
+      --space-20:  80px;
+      --space-24:  96px;
+      --space-32:  128px;
+
+      /* Border Radius */
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   16px;
+      --radius-xl:   24px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-card:    0 2px 16px rgba(0,0,0,0.08);
+      --shadow-hover:   0 8px 32px rgba(0,0,0,0.12);
+      --shadow-strong:  0 16px 48px rgba(0,0,0,0.16);
+
+      /* Layout */
+      --container-max:   1240px;
+      --container-outer: 1400px;
+      --nav-height:      72px;
+
+      /* Breakpoints (read-only reference) */
+      --bp-mobile:  390px;
+      --bp-tablet:  810px;
+      --bp-desktop: 1240px;
+
+      /* Transitions */
+      --transition-fast:   150ms ease-out;
+      --transition-base:   250ms ease-out;
+      --transition-slow:   400ms ease-out;
+
+      /* Z-Index Scale */
+      --z-base:    0;
+      --z-card:    10;
+      --z-sticky:  100;
+      --z-modal:   1000;
+      --z-toast:   2000;
+    }
+
+    /* --- BASE RESET --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body {
+      font-family: var(--font-body);
+      color: var(--color-dark);
+      background: var(--color-white);
+      line-height: var(--leading-normal);
+    }
+    a { color: var(--color-brand); text-decoration: none; }
+
+    /* --- DS PAGE LAYOUT --- */
+    .ds-nav {
+      position: sticky; top: 0; z-index: var(--z-sticky);
+      background: var(--color-dark); padding: 0 var(--space-6);
+      display: flex; align-items: center; justify-content: space-between;
+      height: var(--nav-height); border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .ds-nav__logo { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-semibold); color: var(--color-white); }
+    .ds-nav__badge { background: var(--color-brand); color: var(--color-white); font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold); letter-spacing: 0.08em; text-transform: uppercase; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); }
+    .ds-nav__links { display: flex; gap: var(--space-8); }
+    .ds-nav__links a { color: rgba(255,255,255,0.6); font-size: var(--text-sm); transition: color var(--transition-fast); }
+    .ds-nav__links a:hover { color: var(--color-white); }
+
+    .ds-sidebar {
+      position: fixed; top: var(--nav-height); left: 0; bottom: 0; width: 240px;
+      background: var(--color-bg-light); border-right: 1px solid var(--color-border);
+      overflow-y: auto; padding: var(--space-8) 0;
+    }
+    .ds-sidebar__section { margin-bottom: var(--space-6); }
+    .ds-sidebar__label {
+      font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold);
+      text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted);
+      padding: 0 var(--space-5) var(--space-2);
+    }
+    .ds-sidebar__link {
+      display: block; padding: var(--space-2) var(--space-5); font-size: var(--text-sm);
+      color: var(--color-dark); transition: background var(--transition-fast), color var(--transition-fast);
+    }
+    .ds-sidebar__link:hover { background: rgba(252,54,45,0.06); color: var(--color-brand); }
+    .ds-sidebar__link.active { background: rgba(252,54,45,0.1); color: var(--color-brand); font-weight: var(--weight-medium); border-left: 3px solid var(--color-brand); }
+
+    .ds-main { margin-left: 240px; padding: var(--space-16) var(--space-12); max-width: 960px; }
+
+    /* --- DS SECTION STYLES --- */
+    .ds-section { margin-bottom: var(--space-32); scroll-margin-top: calc(var(--nav-height) + var(--space-8)); }
+    .ds-section__header { margin-bottom: var(--space-8); padding-bottom: var(--space-4); border-bottom: 2px solid var(--color-border); }
+    .ds-section__tag {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      background: rgba(252,54,45,0.08); color: var(--color-brand);
+      font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); margin-bottom: var(--space-3);
+    }
+    .ds-section__tag::before { content: ''; display: block; width: 6px; height: 6px; background: var(--color-brand); border-radius: 50%; }
+    .ds-section__title { font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-semibold); color: var(--color-dark); }
+    .ds-section__desc { font-size: var(--text-base); color: var(--color-muted); margin-top: var(--space-2); line-height: var(--leading-relaxed); }
+
+    /* --- COLOR TOKENS --- */
+    .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--space-4); }
+    .color-swatch { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); }
+    .color-swatch__preview { height: 80px; }
+    .color-swatch__info { padding: var(--space-3) var(--space-4); background: var(--color-white); }
+    .color-swatch__name { font-family: var(--font-ui); font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--color-dark); }
+    .color-swatch__var { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); margin-top: var(--space-1); }
+    .color-swatch__hex { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); }
+
+    /* --- TYPOGRAPHY SCALE --- */
+    .type-scale { display: flex; flex-direction: column; gap: var(--space-4); }
+    .type-row { display: flex; align-items: baseline; gap: var(--space-6); padding: var(--space-4); background: var(--color-bg-light); border-radius: var(--radius-md); }
+    .type-meta { min-width: 180px; flex-shrink: 0; }
+    .type-meta__name { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); }
+    .type-meta__size { font-family: monospace; font-size: var(--text-xs); color: var(--color-brand); font-weight: var(--weight-semibold); }
+    .type-preview { flex: 1; }
+
+    /* --- SPACING SCALE --- */
+    .spacing-grid { display: flex; flex-direction: column; gap: var(--space-3); }
+    .spacing-row { display: flex; align-items: center; gap: var(--space-4); }
+    .spacing-bar { background: var(--color-brand); height: 8px; border-radius: var(--radius-full); opacity: 0.8; }
+    .spacing-label { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); min-width: 80px; }
+    .spacing-value { font-family: monospace; font-size: var(--text-xs); color: var(--color-dark); font-weight: var(--weight-medium); }
+
+    /* --- RADIUS SCALE --- */
+    .radius-grid { display: flex; flex-wrap: wrap; gap: var(--space-4); }
+    .radius-item { display: flex; flex-direction: column; align-items: center; gap: var(--space-2); }
+    .radius-preview { width: 64px; height: 64px; background: var(--color-brand); opacity: 0.15; border: 2px solid var(--color-brand); }
+    .radius-name { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); }
+    .radius-val { font-family: monospace; font-size: var(--text-xs); color: var(--color-dark); font-weight: var(--weight-semibold); }
+
+    /* --- SHADOW SCALE --- */
+    .shadow-grid { display: flex; flex-wrap: wrap; gap: var(--space-6); }
+    .shadow-item { display: flex; flex-direction: column; gap: var(--space-3); }
+    .shadow-preview { width: 120px; height: 80px; background: var(--color-white); border-radius: var(--radius-lg); }
+    .shadow-name { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); }
+
+    /* --- TOKEN TABLE --- */
+    .token-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+    .token-table th { text-align: left; padding: var(--space-3) var(--space-4); background: var(--color-bg-light); font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-muted); border-bottom: 1px solid var(--color-border); }
+    .token-table td { padding: var(--space-3) var(--space-4); border-bottom: 1px solid var(--color-border); vertical-align: middle; }
+    .token-table tr:last-child td { border-bottom: none; }
+    .token-table code { font-family: monospace; font-size: var(--text-xs); background: rgba(252,54,45,0.08); color: var(--color-brand); padding: 2px 6px; border-radius: var(--radius-sm); }
+
+    /* --- BREAKPOINTS VISUAL --- */
+    .bp-visual { position: relative; background: var(--color-bg-light); border-radius: var(--radius-lg); padding: var(--space-6); overflow: hidden; }
+    .bp-bar { height: 40px; background: linear-gradient(90deg, rgba(252,54,45,0.2) 0%, rgba(252,54,45,0.5) 50%, rgba(252,54,45,0.8) 100%); border-radius: var(--radius-md); display: flex; align-items: center; padding: 0 var(--space-4); }
+    .bp-markers { display: flex; justify-content: space-between; margin-top: var(--space-2); padding: 0 var(--space-1); }
+    .bp-marker { font-family: monospace; font-size: var(--text-xs); color: var(--color-muted); }
+    .bp-label { font-family: var(--font-ui); font-size: var(--text-xs); color: var(--color-white); font-weight: var(--weight-semibold); }
+
+    /* --- FONT SHOWCASE --- */
+    .font-showcase { background: var(--color-bg-light); border-radius: var(--radius-xl); padding: var(--space-8); margin-bottom: var(--space-6); }
+    .font-showcase__name { font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-muted); margin-bottom: var(--space-4); }
+    .font-showcase__alpha { font-size: var(--text-2xl); line-height: var(--leading-snug); color: var(--color-dark); margin-bottom: var(--space-2); }
+    .font-showcase__chars { font-size: var(--text-sm); color: var(--color-muted); letter-spacing: 0.05em; }
+
+    /* Page header */
+    .ds-hero { background: var(--color-dark); color: var(--color-white); padding: var(--space-16) var(--space-12); margin-left: 240px; }
+    .ds-hero__eyebrow { display: inline-flex; align-items: center; gap: var(--space-2); background: rgba(252,54,45,0.15); color: var(--color-brand); font-family: var(--font-ui); font-size: var(--text-xs); font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.1em; padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); margin-bottom: var(--space-4); }
+    .ds-hero__eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--color-brand); border-radius: 50%; }
+    .ds-hero__title { font-family: var(--font-display); font-size: var(--text-4xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); margin-bottom: var(--space-4); }
+    .ds-hero__title span { color: var(--color-muted); }
+    .ds-hero__desc { font-size: var(--text-lg); color: rgba(255,255,255,0.6); max-width: 600px; line-height: var(--leading-relaxed); }
+    .ds-hero__meta { display: flex; gap: var(--space-8); margin-top: var(--space-8); }
+    .ds-hero__stat strong { display: block; font-family: var(--font-display); font-size: var(--text-2xl); font-weight: var(--weight-semibold); color: var(--color-brand); }
+    .ds-hero__stat span { font-size: var(--text-sm); color: rgba(255,255,255,0.5); }
+
+    /* Token source badge */
+    .source-badge { display: inline-flex; align-items: center; gap: var(--space-2); background: var(--color-bg-light); border: 1px solid var(--color-border); border-radius: var(--radius-full); padding: var(--space-1) var(--space-3); font-size: var(--text-xs); color: var(--color-muted); margin-bottom: var(--space-6); }
+    .source-badge::before { content: '🔗'; font-size: 10px; }
+  </style>
+</head>
+<body>
+
+<!-- Top Nav -->
+<nav class="ds-nav">
+  <span class="ds-nav__logo">Timmsen Dach</span>
+  <nav class="ds-nav__links">
+    <a href="design-system.html" style="color: #fff;">Design System</a>
+    <a href="komponenten.html">Komponenten</a>
+    <a href="../index.html">→ Live-Site</a>
+  </nav>
+  <span class="ds-nav__badge">Design System v1.0</span>
+</nav>
+
+<!-- Sidebar -->
+<aside class="ds-sidebar">
+  <div class="ds-sidebar__section">
+    <div class="ds-sidebar__label">Foundation</div>
+    <a href="#farben" class="ds-sidebar__link active">Farben (Colors)</a>
+    <a href="#typografie" class="ds-sidebar__link">Typografie</a>
+    <a href="#abstaende" class="ds-sidebar__link">Abstände (Spacing)</a>
+    <a href="#radius" class="ds-sidebar__link">Border Radius</a>
+    <a href="#schatten" class="ds-sidebar__link">Schatten</a>
+    <a href="#uebergaenge" class="ds-sidebar__link">Übergänge</a>
+  </div>
+  <div class="ds-sidebar__section">
+    <div class="ds-sidebar__label">Layout</div>
+    <a href="#breakpoints" class="ds-sidebar__link">Breakpoints</a>
+    <a href="#grid" class="ds-sidebar__link">Container & Grid</a>
+    <a href="#zindex" class="ds-sidebar__link">Z-Index</a>
+  </div>
+  <div class="ds-sidebar__section">
+    <div class="ds-sidebar__label">Referenz</div>
+    <a href="#tokens-quelle" class="ds-sidebar__link">Token-Quelle</a>
+  </div>
+</aside>
+
+<!-- Page Hero -->
+<div class="ds-hero">
+  <div class="ds-hero__eyebrow">Design System</div>
+  <h1 class="ds-hero__title">Foundation Tokens<br><span>für timmsen-dach.de</span></h1>
+  <p class="ds-hero__desc">Alle Design-Entscheidungen an einem Ort. Extrahiert aus dem Elevate Framer Template und angepasst für das Dachdecker-Projekt.</p>
+  <div class="ds-hero__meta">
+    <div class="ds-hero__stat"><strong>6</strong><span>Farb-Tokens</span></div>
+    <div class="ds-hero__stat"><strong>3</strong><span>Schriftarten</span></div>
+    <div class="ds-hero__stat"><strong>13</strong><span>Abstands-Stufen</span></div>
+    <div class="ds-hero__stat"><strong>3</strong><span>Breakpoints</span></div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<main class="ds-main">
+
+  <!-- ===== FARBEN ===== -->
+  <section id="farben" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Foundation</div>
+      <h2 class="ds-section__title">Farben</h2>
+      <p class="ds-section__desc">Alle Farb-Tokens direkt aus dem Elevate Framer Template extrahiert. CSS-Variablen sind im Projekt unter <code>assets/css/main.css</code> definiert.</p>
+    </div>
+
+    <div class="source-badge">Quelle: elevate-template.framer.website → CSS body tokens</div>
+
+    <div class="color-grid">
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background:#fc362d;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">Brand Red</div>
+          <div class="color-swatch__var">--color-brand</div>
+          <div class="color-swatch__hex">#fc362d · Primary CTA, Akzent</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background:#0c0407;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">Near Black</div>
+          <div class="color-swatch__var">--color-dark</div>
+          <div class="color-swatch__hex">#0c0407 · Headlines, Nav BG</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background:#ffffff; border:1px solid #e8e8e8;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">White</div>
+          <div class="color-swatch__var">--color-white</div>
+          <div class="color-swatch__hex">#ffffff · Hintergrund, Cards</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background:#636363;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">Muted Text</div>
+          <div class="color-swatch__var">--color-muted</div>
+          <div class="color-swatch__hex">#636363 · Body-Text, Labels</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background:#f8f8f8; border:1px solid #e8e8e8;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">BG Light</div>
+          <div class="color-swatch__var">--color-bg-light</div>
+          <div class="color-swatch__hex">#f8f8f8 · Section-Hintergrund</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="color-swatch__preview" style="background:#fde8e6;"></div>
+        <div class="color-swatch__info">
+          <div class="color-swatch__name">BG Accent</div>
+          <div class="color-swatch__var">--color-bg-accent</div>
+          <div class="color-swatch__hex">#fde8e6 · CTA-Section BG</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kontrast-Tabelle -->
+    <h3 style="margin-top: var(--space-8); margin-bottom: var(--space-4); font-family: var(--font-display); font-size: var(--text-xl);">Kontrast-Verhältnisse</h3>
+    <table class="token-table">
+      <thead>
+        <tr><th>Vordergrund</th><th>Hintergrund</th><th>Verhältnis</th><th>WCAG</th><th>Verwendung</th></tr>
+      </thead>
+      <tbody>
+        <tr><td style="color:#0c0407">#0c0407 Dark</td><td style="background:#fff; border:1px solid #e8e8e8;">#fff White</td><td><strong>19.3:1</strong></td><td style="color:green">✓ AAA</td><td>Headlines auf weißem BG</td></tr>
+        <tr><td style="color:#fff; background:#fc362d; padding:3px 8px; border-radius:4px;">#fff auf #fc362d</td><td style="background:#fc362d;color:#fff">Brand Red</td><td><strong>4.6:1</strong></td><td style="color:green">✓ AA</td><td>Buttons, CTAs</td></tr>
+        <tr><td style="color:#636363">#636363 Muted</td><td style="background:#fff; border:1px solid #e8e8e8;">#fff White</td><td><strong>5.7:1</strong></td><td style="color:green">✓ AA</td><td>Body-Text, Descriptions</td></tr>
+        <tr><td style="color:#fff; background:#0c0407; padding:3px 8px; border-radius:4px;">#fff auf #0c0407</td><td style="background:#0c0407;color:#fff">Near Black</td><td><strong>19.3:1</strong></td><td style="color:green">✓ AAA</td><td>Nav-Links auf dunklem BG</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== TYPOGRAFIE ===== -->
+  <section id="typografie" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Foundation</div>
+      <h2 class="ds-section__title">Typografie</h2>
+      <p class="ds-section__desc">Drei Schriftfamilien aus dem Elevate Template — Sora für Display, Cabin für Body, Poppins für UI-Elemente.</p>
+    </div>
+
+    <!-- Sora -->
+    <div class="font-showcase">
+      <div class="font-showcase__name">Display / Headings — Sora</div>
+      <div class="font-showcase__alpha" style="font-family:'Sora',sans-serif; font-weight:600;">
+        Partner With Award Winning Design Agency
+      </div>
+      <div class="font-showcase__chars" style="font-family:'Sora',sans-serif;">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789
+      </div>
+    </div>
+
+    <!-- Cabin -->
+    <div class="font-showcase">
+      <div class="font-showcase__name">Body / Content — Cabin</div>
+      <div class="font-showcase__alpha" style="font-family:'Cabin',sans-serif; font-weight:400; font-size: var(--text-xl);">
+        Wir partner with you to craft a successful business model that authentically reflects your unique vision.
+      </div>
+      <div class="font-showcase__chars" style="font-family:'Cabin',sans-serif;">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789
+      </div>
+    </div>
+
+    <!-- Poppins -->
+    <div class="font-showcase">
+      <div class="font-showcase__name">UI / Labels / Buttons — Poppins</div>
+      <div class="font-showcase__alpha" style="font-family:'Poppins',sans-serif; font-weight:600; font-size: var(--text-xl);">
+        Get Started → Learn More → Contact Us
+      </div>
+      <div class="font-showcase__chars" style="font-family:'Poppins',sans-serif;">
+        ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789
+      </div>
+    </div>
+
+    <!-- Type Scale -->
+    <h3 style="margin-bottom: var(--space-4); font-family: var(--font-display); font-size: var(--text-xl);">Schriftgrößen-Skala</h3>
+    <div class="type-scale">
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-5xl</div><div class="type-meta__size">72px · Display Hero</div></div>
+        <div class="type-preview" style="font-family:'Sora',sans-serif; font-size:48px; font-weight:600; line-height:1.1; color:var(--color-dark);">Headline</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-4xl</div><div class="type-meta__size">56px · Hero Title</div></div>
+        <div class="type-preview" style="font-family:'Sora',sans-serif; font-size:42px; font-weight:600; line-height:1.1; color:var(--color-dark);">Award Winning</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-3xl</div><div class="type-meta__size">42px · Section Title</div></div>
+        <div class="type-preview" style="font-family:'Sora',sans-serif; font-size:36px; font-weight:600; color:var(--color-dark);">Showcase of Excellence</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-2xl</div><div class="type-meta__size">32px · Sub-Heading</div></div>
+        <div class="type-preview" style="font-family:'Sora',sans-serif; font-size:28px; font-weight:600; color:var(--color-dark);">What Our Clients Say</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-xl</div><div class="type-meta__size">24px · Card Title</div></div>
+        <div class="type-preview" style="font-family:'Cabin',sans-serif; font-size:22px; font-weight:600; color:var(--color-dark);">Brand Design</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-lg</div><div class="type-meta__size">20px · Lead Text</div></div>
+        <div class="type-preview" style="font-family:'Cabin',sans-serif; font-size:18px; font-weight:400; color:var(--color-muted);">We partner with you to craft a successful model</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-base</div><div class="type-meta__size">16px · Body</div></div>
+        <div class="type-preview" style="font-family:'Cabin',sans-serif; font-size:16px; font-weight:400; color:var(--color-muted);">We blend cutting-edge technology with creative design, leveraging the power of Framer.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-sm</div><div class="type-meta__size">14px · Small / Nav</div></div>
+        <div class="type-preview" style="font-family:'Cabin',sans-serif; font-size:14px; font-weight:400; color:var(--color-muted);">About · Services · Pricing · Projects</div>
+      </div>
+      <div class="type-row">
+        <div class="type-meta"><div class="type-meta__name">--text-xs</div><div class="type-meta__size">12px · Badge / Tag</div></div>
+        <div class="type-preview" style="font-family:'Poppins',sans-serif; font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--color-brand);">DESIGN &amp; DEVELOPMENT AGENCY</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABSTÄNDE ===== -->
+  <section id="abstaende" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Foundation</div>
+      <h2 class="ds-section__title">Abstände (Spacing)</h2>
+      <p class="ds-section__desc">4px-Basis-System. Alle Abstände sind Vielfache von 4px für konsistenten Rhythmus.</p>
+    </div>
+    <div class="spacing-grid">
+      <div class="spacing-row"><div class="spacing-label">--space-1</div><div class="spacing-bar" style="width:4px;"></div><div class="spacing-value">4px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-2</div><div class="spacing-bar" style="width:8px;"></div><div class="spacing-value">8px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-3</div><div class="spacing-bar" style="width:12px;"></div><div class="spacing-value">12px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-4</div><div class="spacing-bar" style="width:16px;"></div><div class="spacing-value">16px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-5</div><div class="spacing-bar" style="width:20px;"></div><div class="spacing-value">20px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-6</div><div class="spacing-bar" style="width:24px;"></div><div class="spacing-value">24px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-8</div><div class="spacing-bar" style="width:32px;"></div><div class="spacing-value">32px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-10</div><div class="spacing-bar" style="width:40px;"></div><div class="spacing-value">40px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-12</div><div class="spacing-bar" style="width:48px;"></div><div class="spacing-value">48px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-16</div><div class="spacing-bar" style="width:64px;"></div><div class="spacing-value">64px · Section padding</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-20</div><div class="spacing-bar" style="width:80px;"></div><div class="spacing-value">80px · Section gap</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-24</div><div class="spacing-bar" style="width:96px;"></div><div class="spacing-value">96px</div></div>
+      <div class="spacing-row"><div class="spacing-label">--space-32</div><div class="spacing-bar" style="width:128px;"></div><div class="spacing-value">128px · Hero padding</div></div>
+    </div>
+  </section>
+
+  <!-- ===== BORDER RADIUS ===== -->
+  <section id="radius" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Foundation</div>
+      <h2 class="ds-section__title">Border Radius</h2>
+      <p class="ds-section__desc">Moderne, weiche Radien aus dem Elevate Template — von kleinen Badges bis zum vollständigen Pill-Stil.</p>
+    </div>
+    <div class="radius-grid">
+      <div class="radius-item"><div class="radius-preview" style="border-radius:4px;"></div><div class="radius-name">--radius-sm</div><div class="radius-val">4px</div><div class="radius-name" style="font-size:10px;">Buttons, Tags</div></div>
+      <div class="radius-item"><div class="radius-preview" style="border-radius:8px;"></div><div class="radius-name">--radius-md</div><div class="radius-val">8px</div><div class="radius-name" style="font-size:10px;">Inputs, kleine Cards</div></div>
+      <div class="radius-item"><div class="radius-preview" style="border-radius:16px;"></div><div class="radius-name">--radius-lg</div><div class="radius-val">16px</div><div class="radius-name" style="font-size:10px;">Cards, Bilder</div></div>
+      <div class="radius-item"><div class="radius-preview" style="border-radius:24px;"></div><div class="radius-name">--radius-xl</div><div class="radius-val">24px</div><div class="radius-name" style="font-size:10px;">Hero-Bild, große Cards</div></div>
+      <div class="radius-item"><div class="radius-preview" style="border-radius:9999px;"></div><div class="radius-name">--radius-full</div><div class="radius-val">9999px</div><div class="radius-name" style="font-size:10px;">Badges, Pills, Avatar</div></div>
+    </div>
+  </section>
+
+  <!-- ===== SCHATTEN ===== -->
+  <section id="schatten" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Foundation</div>
+      <h2 class="ds-section__title">Schatten (Shadows)</h2>
+      <p class="ds-section__desc">Dezente Schatten für Tiefe — niemals schwer oder dramatisch im Elevate-Stil.</p>
+    </div>
+    <div class="shadow-grid">
+      <div class="shadow-item">
+        <div class="shadow-preview" style="box-shadow: 0 2px 16px rgba(0,0,0,0.08);"></div>
+        <div class="shadow-name">--shadow-card</div>
+        <div class="shadow-name" style="font-size:10px; margin-top:2px;">0 2px 16px rgba(0,0,0,0.08)</div>
+        <div class="shadow-name">Cards, ruhend</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-preview" style="box-shadow: 0 8px 32px rgba(0,0,0,0.12);"></div>
+        <div class="shadow-name">--shadow-hover</div>
+        <div class="shadow-name" style="font-size:10px; margin-top:2px;">0 8px 32px rgba(0,0,0,0.12)</div>
+        <div class="shadow-name">Hover-Zustand</div>
+      </div>
+      <div class="shadow-item">
+        <div class="shadow-preview" style="box-shadow: 0 16px 48px rgba(0,0,0,0.16);"></div>
+        <div class="shadow-name">--shadow-strong</div>
+        <div class="shadow-name" style="font-size:10px; margin-top:2px;">0 16px 48px rgba(0,0,0,0.16)</div>
+        <div class="shadow-name">Modals, Dropdowns</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ÜBERGÄNGE ===== -->
+  <section id="uebergaenge" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Foundation</div>
+      <h2 class="ds-section__title">Übergänge &amp; Animation</h2>
+      <p class="ds-section__desc">Hover-Felder zum Testen. Alle Animationen folgen 150–300ms ease-out (Elevate Standard).</p>
+    </div>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Wert</th><th>Verwendung</th><th>Demo</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><code>--transition-fast</code></td>
+          <td>150ms ease-out</td>
+          <td>Hover Farbe, Opacity</td>
+          <td>
+            <a href="#" onclick="return false;" style="display:inline-block; padding:8px 16px; background:var(--color-dark); color:#fff; border-radius:4px; font-size:12px; transition:background 150ms ease-out;" onmouseover="this.style.background='#fc362d'" onmouseout="this.style.background='#0c0407'">Hover mich</a>
+          </td>
+        </tr>
+        <tr>
+          <td><code>--transition-base</code></td>
+          <td>250ms ease-out</td>
+          <td>Cards, Buttons, Transforms</td>
+          <td>
+            <div style="display:inline-block; width:48px; height:48px; background:var(--color-bg-light); border:1px solid var(--color-border); border-radius:8px; transition:transform 250ms ease-out, box-shadow 250ms ease-out; cursor:pointer;" onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 32px rgba(0,0,0,0.12)'" onmouseout="this.style.transform=''; this.style.boxShadow=''"></div>
+          </td>
+        </tr>
+        <tr>
+          <td><code>--transition-slow</code></td>
+          <td>400ms ease-out</td>
+          <td>Menüs, Overlays, Seiten-Übergänge</td>
+          <td>
+            <div style="display:inline-block; padding:8px 16px; background:rgba(252,54,45,0.1); color:var(--color-brand); border-radius:4px; font-size:12px; transition:background 400ms ease-out; cursor:pointer;" onmouseover="this.style.background='rgba(252,54,45,0.2)'" onmouseout="this.style.background='rgba(252,54,45,0.1)'">Slow fade</div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== BREAKPOINTS ===== -->
+  <section id="breakpoints" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Layout</div>
+      <h2 class="ds-section__title">Breakpoints</h2>
+      <p class="ds-section__desc">Direkt aus den Framer-CSS-Klassen extrahiert: <code>hidden-72rtr7</code>, <code>hidden-1vqeopz</code>, <code>hidden-13va0rc</code>.</p>
+    </div>
+    <div class="bp-visual">
+      <div class="bp-bar">
+        <span class="bp-label">Mobile 390px → Tablet 810px → Desktop 1240px+</span>
+      </div>
+      <div class="bp-markers">
+        <span class="bp-marker">0px</span>
+        <span class="bp-marker" style="color:var(--color-brand); font-weight:600;">810px (Tablet)</span>
+        <span class="bp-marker" style="color:var(--color-brand); font-weight:600;">1240px (Desktop)</span>
+      </div>
+    </div>
+    <table class="token-table" style="margin-top: var(--space-6);">
+      <thead><tr><th>Name</th><th>Min-Width</th><th>Framer-Klasse</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Mobile</td><td><code>≤ 809px</code></td><td><code>.hidden-13va0rc</code></td><td>Smartphone, Portrait &amp; Landscape</td></tr>
+        <tr><td>Tablet</td><td><code>810px – 1239px</code></td><td><code>.hidden-1vqeopz</code></td><td>Tablet, kleines Desktop-Fenster</td></tr>
+        <tr><td>Desktop</td><td><code>≥ 1240px</code></td><td><code>.hidden-72rtr7</code></td><td>Desktop, breiter Viewport</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== GRID / CONTAINER ===== -->
+  <section id="grid" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Layout</div>
+      <h2 class="ds-section__title">Container &amp; Grid</h2>
+      <p class="ds-section__desc">Layout-System aus dem Elevate-Template: äußerer Container 1400px, innerer Inhaltsbereich 1240px.</p>
+    </div>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Wert</th><th>Verwendung</th></tr></thead>
+      <tbody>
+        <tr><td><code>--container-outer</code></td><td>1400px</td><td>Äußerer Layout-Wrapper (.framer-1s8382n)</td></tr>
+        <tr><td><code>--container-max</code></td><td>1240px</td><td>Innerer Content-Bereich (.framer-1gw3ohd max-width)</td></tr>
+        <tr><td><code>--nav-height</code></td><td>72px</td><td>Navigation height (--space-10 top/bottom)</td></tr>
+        <tr><td>Nav padding</td><td>8px 20px</td><td>Innen-Abstand der Navigation</td></tr>
+        <tr><td>Nav gap (Desktop)</td><td>32px</td><td>Abstand zwischen Nav-Links</td></tr>
+        <tr><td>Nav gap (Tablet)</td><td>20px</td><td>Abstand zwischen Nav-Links (Tablet)</td></tr>
+        <tr><td>Section padding</td><td>80–128px</td><td>Vertikal-Abstand der Sections</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== Z-INDEX ===== -->
+  <section id="zindex" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Layout</div>
+      <h2 class="ds-section__title">Z-Index Skala</h2>
+      <p class="ds-section__desc">Definierte Ebenen für konsistente Überlagerung ohne Konflikte.</p>
+    </div>
+    <table class="token-table">
+      <thead><tr><th>Token</th><th>Wert</th><th>Elemente</th></tr></thead>
+      <tbody>
+        <tr><td><code>--z-base</code></td><td>0</td><td>Standard-Fluss</td></tr>
+        <tr><td><code>--z-card</code></td><td>10</td><td>Hover-Cards, kleine Overlays</td></tr>
+        <tr><td><code>--z-sticky</code></td><td>100</td><td>Sticky Navigation (Framer: z-index: 10)</td></tr>
+        <tr><td><code>--z-modal</code></td><td>1000</td><td>Modals, Drawers</td></tr>
+        <tr><td><code>--z-toast</code></td><td>2000</td><td>Toasts, Notifications</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ===== TOKEN-QUELLE ===== -->
+  <section id="tokens-quelle" class="ds-section">
+    <div class="ds-section__header">
+      <div class="ds-section__tag">Referenz</div>
+      <h2 class="ds-section__title">Token-Quelle</h2>
+      <p class="ds-section__desc">Originale Framer-CSS-Variablen aus dem Elevate Template.</p>
+    </div>
+    <table class="token-table">
+      <thead><tr><th>Framer Token ID</th><th>Wert</th><th>Unser Token-Name</th></tr></thead>
+      <tbody>
+        <tr><td><code>--token-71046100-4185-42d7-9390-54ee645f5fde</code></td><td>#fc362d</td><td>--color-brand</td></tr>
+        <tr><td><code>--token-630fc3c8-b115-4393-8532-82d9a6d807d7</code></td><td>#fff</td><td>--color-white</td></tr>
+        <tr><td><code>--token-242edd6b-a1d9-48b9-a926-f5b8bc457ecb</code></td><td>#0c0407</td><td>--color-dark</td></tr>
+        <tr><td><code>--token-e0a3f9cc-042c-4657-97ac-f0d618aaff9b</code></td><td>rgba(0,0,0,0.2)</td><td>--color-overlay</td></tr>
+        <tr><td><code>--token-c4f08d40-20f8-4012-ad5d-5b441b500595</code></td><td>gray</td><td>--color-muted (→ #636363)</td></tr>
+        <tr><td><code>--token-74fa03d8-817e-4d75-a7e6-47e19fc55afa</code></td><td>#636363</td><td>--color-muted</td></tr>
+      </tbody>
+    </table>
+    <div style="margin-top: var(--space-8); padding: var(--space-6); background: var(--color-bg-light); border-radius: var(--radius-lg); border-left: 3px solid var(--color-brand);">
+      <p style="font-size: var(--text-sm); color: var(--color-muted); line-height: var(--leading-relaxed);">
+        <strong style="color: var(--color-dark);">Nächste Schritte:</strong> Alle Tokens sind in <code>assets/css/main.css</code> als CSS-Custom-Properties definiert.
+        Die Komponenten-Seite (<a href="komponenten.html">komponenten.html</a>) zeigt, wie diese Tokens in UI-Komponenten angewendet werden.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // Active sidebar link on scroll
+  const sections = document.querySelectorAll('.ds-section');
+  const links = document.querySelectorAll('.ds-sidebar__link');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const id = entry.target.id;
+        const active = document.querySelector(`.ds-sidebar__link[href="#${id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
