@@ -10,9 +10,9 @@
 }
 
 :root {
-  --color-primary:    #1d2132;
-  --color-secondary:  #2c3e50;
-  --color-accent:     #1d2132;
+  --color-primary:    #612319;
+  --color-secondary:  #1e0e09;
+  --color-accent:     #612319;
   --color-bg:         #f4f4f4;
   --color-white:      #ffffff;
   --color-text:       #333333;
@@ -136,7 +136,7 @@ img {
 }
 
 .btn-primary:hover {
-  background-color: #141826;
+  background-color: #4a1a10;
   text-decoration: none;
 }
 

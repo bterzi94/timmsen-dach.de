@@ -16,13 +16,15 @@
        DESIGN TOKENS — Elevate System (timmsen-dach.de)
     ============================================================ */
     :root {
-      --color-brand:      #1d2132;
-      --color-dark:       #0c0407;
+      /* Originalfarben timmsen-dach.de — #612319 Ziegelrot */
+      --color-brand:      #612319;   /* Original: .bg-darkbrown */
+      --color-brand-hover:#4a1a10;   /* Dunkler für Hover/Active */
+      --color-dark:       #1e0e09;   /* Warmes Tief-Schwarz (leitet sich von #612319 ab) */
       --color-white:      #ffffff;
-      --color-muted:      #636363;
-      --color-bg-light:   #f8f8f8;
-      --color-bg-accent:  #eaecf5;
-      --color-border:     #e8e8e8;
+      --color-muted:      #6b5a55;   /* Warmes Grau statt neutrales Grau */
+      --color-bg-light:   #faf6f2;   /* Warmes Off-White (abgeleitet vom Sand-Gradient) */
+      --color-bg-accent:  #f5ece3;   /* Heller Sand (rgba(225,191,146,0.3) auf Weiß) */
+      --color-border:     #e8ddd7;   /* Warme Border */
 
       --font-display: 'Sora', sans-serif;
       --font-body:    'Cabin', sans-serif;
@@ -221,8 +223,8 @@
       display: inline-flex;
       align-items: center;
       gap: var(--space-2);
-      background: rgba(29,33,50,0.08);
-      border: 1px solid rgba(29,33,50,0.2);
+      background: rgba(97,35,25,0.08);
+      border: 1px solid rgba(97,35,25,0.2);
       color: var(--color-brand);
       font-family: var(--font-ui);
       font-size: 11px;
@@ -278,7 +280,7 @@
     .hero__feature-icon {
       width: 22px;
       height: 22px;
-      background: rgba(29,33,50,0.08);
+      background: rgba(97,35,25,0.08);
       border-radius: var(--radius-full);
       display: flex;
       align-items: center;
@@ -350,7 +352,7 @@
       border-radius: var(--radius-full);
       border: 2px solid var(--color-dark);
       margin-left: -6px;
-      background: linear-gradient(135deg, #1d2132 0%, #3d4f8f 100%);
+      background: linear-gradient(135deg, #612319 0%, #a0432e 100%);
     }
     .hero__visual-chip-avatar:first-child { margin-left: 0; }
     .hero__visual-chip-avatar:nth-child(2) { background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); }
@@ -428,9 +430,9 @@
       text-decoration: none;
     }
     .btn-primary:active {
-      background: #141826;
+      background: var(--color-brand-hover);
       transform: scale(0.98);
-      box-shadow: 0 4px 20px rgba(29,33,50,0.4);
+      box-shadow: 0 4px 20px rgba(97,35,25,0.4);
     }
     .btn-primary__arrow {
       transition: transform var(--transition-fast);
