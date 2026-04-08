@@ -216,9 +216,23 @@
       margin-bottom: var(--space-5);
     }
     .badge__dot {
-      width: 5px; height: 5px;
-      background: var(--color-brand);
+      position: relative;
+      width: 8px; height: 8px;
+      flex-shrink: 0;
+    }
+    .badge__dot::before,
+    .badge__dot::after {
+      content: '';
+      position: absolute;
+      inset: 0;
       border-radius: 50%;
+      background: #22c55e;
+    }
+    .badge__dot::after {
+      animation: pulse-ring 1.8s ease-out infinite;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .badge__dot::after { animation: none; }
     }
 
     /* H1 */
@@ -323,30 +337,9 @@
     .btn-primary__arrow { transition: transform var(--transition-fast); }
     .btn-primary:active .btn-primary__arrow { transform: translateX(3px); }
 
-    /* Online dot */
-    .online-dot {
-      position: relative;
-      width: 10px;
-      height: 10px;
-      flex-shrink: 0;
-    }
-    .online-dot::before,
-    .online-dot::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: #22c55e;
-    }
-    .online-dot::after {
-      animation: pulse-ring 1.8s ease-out infinite;
-    }
     @keyframes pulse-ring {
       0%   { transform: scale(1); opacity: 0.7; }
       100% { transform: scale(2.6); opacity: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .online-dot::after { animation: none; }
     }
 
     /* Secondary button */
@@ -546,7 +539,6 @@
       class="btn-primary"
       aria-label="Jetzt anrufen: 04843 20 59 095"
     >
-      <span class="online-dot" aria-hidden="true"></span>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.57 3.4 2 2 0 0 1 3.54 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.7a16 16 0 0 0 5.9 5.9l.87-.87a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
       </svg>
