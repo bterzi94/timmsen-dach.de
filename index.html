@@ -39,7 +39,7 @@
       --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
 
       /* Nav height + sticky CTA height — used for scroll offsets */
-      --nav-height:       60px;
+      --nav-height:       72px;
       --cta-height:       88px; /* sticky bar incl. padding */
 
       --transition-fast: 150ms ease-out;
@@ -84,7 +84,8 @@
     .nav__inner {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
+      position: relative;
       height: var(--nav-height);
     }
 
@@ -95,12 +96,14 @@
       text-decoration: none;
     }
     .nav__logo img {
-      height: 36px;
+      height: 48px;
       width: auto;
     }
 
     /* Hamburger — light bg → dark lines */
     .nav__burger {
+      position: absolute;
+      right: 0;
       width: 44px;
       height: 44px;
       display: flex;
