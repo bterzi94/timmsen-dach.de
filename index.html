@@ -180,7 +180,7 @@
     /* ── 1. Hero Image — fullwidth, no radius, direct under nav ── */
     .hero__visual {
       width: 100%;
-      aspect-ratio: 4/3;
+      height: calc((100dvh - var(--nav-height) - var(--cta-height)) / 3);
       overflow: hidden;
       display: block;
       margin: 0;
@@ -360,7 +360,7 @@
       .nav__drawer-links a { font-size: 36px; }
       .nav__drawer { padding-left: var(--space-10); padding-right: var(--space-10); }
 
-      .hero__visual { aspect-ratio: 16/9; }
+      .hero__visual { height: calc((100dvh - var(--nav-height) - var(--cta-height)) / 3); }
 
       .hero__content { padding: var(--space-10) var(--space-8) var(--space-8); }
 
