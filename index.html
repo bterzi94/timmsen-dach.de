@@ -6,25 +6,23 @@
   <meta name="description" content="Timmsen Dach – Ihr Fachbetrieb für Dachdeckerarbeiten in Schleswig-Holstein" />
   <title>Timmsen Dach | Dachdecker Fachbetrieb</title>
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=Cabin:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
 
   <style>
     /* ============================================================
-       DESIGN TOKENS — Elevate System (timmsen-dach.de)
+       DESIGN TOKENS
     ============================================================ */
     :root {
-      /* Originalfarben timmsen-dach.de — #612319 Ziegelrot */
-      --color-brand:      #612319;   /* Original: .bg-darkbrown */
-      --color-brand-hover:#4a1a10;   /* Dunkler für Hover/Active */
-      --color-dark:       #1e0e09;   /* Warmes Tief-Schwarz (leitet sich von #612319 ab) */
+      --color-brand:      #612319;
+      --color-brand-hover:#4a1a10;
+      --color-dark:       #1e0e09;
       --color-white:      #ffffff;
-      --color-muted:      #6b5a55;   /* Warmes Grau statt neutrales Grau */
-      --color-bg-light:   #faf6f2;   /* Warmes Off-White (abgeleitet vom Sand-Gradient) */
-      --color-bg-accent:  #f5ece3;   /* Heller Sand (rgba(225,191,146,0.3) auf Weiß) */
-      --color-border:     #e8ddd7;   /* Warme Border */
+      --color-muted:      #6b5a55;
+      --color-bg-light:   #faf6f2;
+      --color-bg-accent:  #f5ece3;
+      --color-border:     #e8ddd7;
 
       --font-display: 'Sora', sans-serif;
       --font-body:    'Cabin', sans-serif;
@@ -39,7 +37,10 @@
 
       --shadow-card:  0 2px 16px rgba(0,0,0,0.08);
       --shadow-hover: 0 8px 32px rgba(0,0,0,0.12);
-      --nav-height:   60px;
+
+      /* Nav height + sticky CTA height — used for scroll offsets */
+      --nav-height:       60px;
+      --cta-height:       88px; /* sticky bar incl. padding */
 
       --transition-fast: 150ms ease-out;
       --transition-base: 250ms ease-out;
@@ -55,21 +56,18 @@
       color: var(--color-dark);
       background: var(--color-white);
       line-height: 1.5;
-      /* Mobile + Tablet — kein Desktop */
       max-width: 810px;
       margin: 0 auto;
       position: relative;
+      /* Reserve space so sticky CTA doesn't cover content */
+      padding-bottom: calc(var(--cta-height) + env(safe-area-inset-bottom, 0px));
     }
     a { color: inherit; text-decoration: none; }
     img { display: block; max-width: 100%; }
     button { border: none; background: none; cursor: pointer; font-family: inherit; }
 
     /* ============================================================
-       NAVIGATION
-       - Fixed top, dark bg
-       - Logo left | Hamburger right
-       - Safe area: env(safe-area-inset-top)
-       - Touch targets: 44×44px minimum
+       NAVIGATION — Light Theme
     ============================================================ */
     .nav {
       position: fixed;
@@ -79,7 +77,8 @@
       width: 100%;
       max-width: 810px;
       z-index: 100;
-      background: var(--color-dark);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
       padding: env(safe-area-inset-top, 0px) var(--space-5) 0;
     }
     .nav__inner {
@@ -93,15 +92,14 @@
     .nav__logo {
       display: flex;
       align-items: center;
-      gap: var(--space-2);
       text-decoration: none;
     }
     .nav__logo img {
-      height: 38px;
+      height: 36px;
       width: auto;
     }
 
-    /* Hamburger — 44×44px touch target */
+    /* Hamburger — light bg → dark lines */
     .nav__burger {
       width: 44px;
       height: 44px;
@@ -115,16 +113,15 @@
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
     }
-    .nav__burger:active { background: rgba(255,255,255,0.08); }
+    .nav__burger:active { background: rgba(0,0,0,0.05); }
     .nav__burger-line {
       width: 22px;
       height: 2px;
-      background: var(--color-white);
+      background: var(--color-dark); /* dark on light bg */
       border-radius: var(--radius-full);
       transition: transform var(--transition-base), opacity var(--transition-fast);
       transform-origin: center;
     }
-    /* Open state */
     .nav__burger.is-open .nav__burger-line:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav__burger.is-open .nav__burger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
     .nav__burger.is-open .nav__burger-line:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -170,50 +167,33 @@
       -webkit-tap-highlight-color: transparent;
     }
     .nav__drawer-links a:active { color: var(--color-brand); }
-    .nav__drawer-cta {
-      margin-top: var(--space-8);
-    }
+    .nav__drawer-cta { margin-top: var(--space-8); }
 
     /* ============================================================
        HERO SECTION
-       Offset for fixed nav
     ============================================================ */
     .hero {
       padding-top: calc(var(--nav-height) + env(safe-area-inset-top, 0px));
       background: var(--color-white);
+    }
+
+    /* ── 1. Hero Image — fullwidth, no radius, direct under nav ── */
+    .hero__visual {
+      width: 100%;
+      aspect-ratio: 4/3;
       overflow: hidden;
+      display: block;
+      margin: 0;
+    }
+    .hero__visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
-    /* ── Top Bar: Trust Signal ── */
-    .hero__trust {
-      background: var(--color-bg-accent);
-      padding: var(--space-2) var(--space-5);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-2);
-    }
-    .hero__trust-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--color-brand);
-      border-radius: 50%;
-      flex-shrink: 0;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.6; transform: scale(1.3); }
-    }
-    .hero__trust-text {
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--color-brand);
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Content ── */
+    /* ── 2. Text Content ── */
     .hero__content {
       padding: var(--space-8) var(--space-5) var(--space-6);
     }
@@ -264,13 +244,12 @@
       margin-bottom: var(--space-6);
     }
 
-    /* Features / Benefits */
+    /* Features */
     .hero__features {
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: var(--space-3);
-      margin-bottom: var(--space-8);
     }
     .hero__feature {
       display: flex;
@@ -298,123 +277,31 @@
       font-weight: 400;
     }
 
-    /* ── Visual / Foto ── */
-    .hero__visual {
-      margin: 0 var(--space-5) var(--space-6);
-      position: relative;
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      aspect-ratio: 4/3;
-      background: linear-gradient(145deg, #e8e4e0 0%, #d0cbc5 100%);
-      box-shadow: var(--shadow-hover);
-    }
-
-    /* Placeholder image (replace with real <img>) */
-    .hero__visual-placeholder {
+    /* ============================================================
+       STICKY CTA BAR — fixed bottom
+    ============================================================ */
+    .cta-bar {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 100%;
-      height: 100%;
+      max-width: 810px;
+      z-index: 100;
+      background: var(--color-white);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-3) var(--space-5) calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-3);
-      color: rgba(0,0,0,0.2);
-    }
-    .hero__visual-placeholder svg { opacity: 0.3; }
-    .hero__visual-placeholder p {
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      opacity: 0.5;
-    }
-
-    /* Floating badge on image */
-    .hero__visual-chip {
-      position: absolute;
-      bottom: var(--space-4);
-      left: var(--space-4);
-      background: var(--color-dark);
-      border-radius: var(--radius-lg);
-      padding: var(--space-3) var(--space-4);
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-      box-shadow: var(--shadow-strong);
-    }
-    .hero__visual-chip-avatars {
-      display: flex;
-    }
-    .hero__visual-chip-avatar {
-      width: 22px;
-      height: 22px;
-      border-radius: var(--radius-full);
-      border: 2px solid var(--color-dark);
-      margin-left: -6px;
-      background: linear-gradient(135deg, #612319 0%, #a0432e 100%);
-    }
-    .hero__visual-chip-avatar:first-child { margin-left: 0; }
-    .hero__visual-chip-avatar:nth-child(2) { background: linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%); }
-    .hero__visual-chip-avatar:nth-child(3) { background: linear-gradient(135deg, #10b981 0%, #34d399 100%); }
-    .hero__visual-chip-info {}
-    .hero__visual-chip-label {
-      font-family: var(--font-ui);
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--color-white);
-      line-height: 1.2;
-    }
-    .hero__visual-chip-stars {
-      font-size: 9px;
-      color: #f59e0b;
-      letter-spacing: 0.5px;
-    }
-
-    /* Years badge (top right of image) */
-    .hero__visual-years {
-      position: absolute;
-      top: var(--space-4);
-      right: var(--space-4);
-      background: rgba(12,4,7,0.7);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      border-radius: var(--radius-lg);
-      padding: var(--space-3) var(--space-4);
-      text-align: center;
-    }
-    .hero__visual-years-number {
-      font-family: var(--font-display);
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--color-brand);
-      line-height: 1;
-    }
-    .hero__visual-years-label {
-      font-family: var(--font-ui);
-      font-size: 9px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.6);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 2px;
-    }
-
-    /* ── CTAs ── */
-    .hero__cta {
-      padding: 0 var(--space-5) var(--space-10);
-      display: flex;
-      flex-direction: column;
       gap: var(--space-3);
     }
 
-    /* Primary button — full width, pill, 52px height (≥44px touch) */
+    /* Primary button */
     .btn-primary {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: var(--space-2);
-      width: 100%;
+      flex: 1;
       height: 52px;
       background: var(--color-brand);
       color: var(--color-white);
@@ -424,7 +311,7 @@
       border-radius: var(--radius-full);
       border: none;
       cursor: pointer;
-      transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+      transition: background var(--transition-fast), transform var(--transition-fast);
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
       text-decoration: none;
@@ -432,23 +319,19 @@
     .btn-primary:active {
       background: var(--color-brand-hover);
       transform: scale(0.98);
-      box-shadow: 0 4px 20px rgba(97,35,25,0.4);
     }
-    .btn-primary__arrow {
-      transition: transform var(--transition-fast);
-    }
+    .btn-primary__arrow { transition: transform var(--transition-fast); }
     .btn-primary:active .btn-primary__arrow { transform: translateX(3px); }
 
-    /* Secondary — ghost/text link */
+    /* Secondary button */
     .btn-secondary {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: var(--space-2);
-      width: 100%;
-      height: 48px;
+      flex: 1;
+      height: 52px;
       background: transparent;
-      color: var(--color-muted);
+      color: var(--color-dark);
       font-family: var(--font-ui);
       font-size: 14px;
       font-weight: 500;
@@ -461,89 +344,46 @@
       text-decoration: none;
     }
     .btn-secondary:active {
-      border-color: var(--color-dark);
-      color: var(--color-dark);
+      border-color: var(--color-brand);
+      color: var(--color-brand);
     }
 
     /* ============================================================
-       TABLET BREAKPOINT — ≥ 600px (bis max 810px)
+       TABLET ≥ 600px
     ============================================================ */
     @media (min-width: 600px) {
+      :root { --nav-height: 72px; --cta-height: 96px; }
 
-      /* Nav */
-      .nav__inner        { height: 72px; }
-      .nav {
-        padding-left:  var(--space-8);
-        padding-right: var(--space-8);
-      }
-      .nav__logo img     { height: 44px; }
+      .nav { padding-left: var(--space-8); padding-right: var(--space-8); }
+      .nav__logo img { height: 44px; }
 
-      /* Drawer links größer */
       .nav__drawer-links a { font-size: 36px; }
-      .nav__drawer {
-        padding-left:  var(--space-10);
-        padding-right: var(--space-10);
-      }
+      .nav__drawer { padding-left: var(--space-10); padding-right: var(--space-10); }
 
-      /* Trust bar */
-      .hero__trust-text  { font-size: 13px; }
+      .hero__visual { aspect-ratio: 16/9; }
 
-      /* Hero content */
-      .hero__content {
-        padding: var(--space-12) var(--space-8) var(--space-8);
-      }
+      .hero__content { padding: var(--space-10) var(--space-8) var(--space-8); }
 
-      /* Badge */
       .badge { font-size: 12px; padding: 6px var(--space-4); }
 
-      /* H1 */
-      .hero__title {
-        font-size: 52px;
-        margin-bottom: var(--space-5);
-      }
+      .hero__title { font-size: 52px; margin-bottom: var(--space-5); }
+      .hero__sub    { font-size: 17px; max-width: 560px; }
 
-      /* Subtext */
-      .hero__sub { font-size: 17px; max-width: 560px; }
-
-      /* Features — 2 Spalten auf Tablet */
       .hero__features {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: var(--space-4) var(--space-6);
-        margin-bottom: var(--space-10);
       }
       .hero__feature-icon { width: 26px; height: 26px; }
       .hero__feature-text { font-size: 15px; }
 
-      /* Visual */
-      .hero__visual {
-        margin-left:  var(--space-8);
-        margin-right: var(--space-8);
-        margin-bottom: var(--space-8);
-        aspect-ratio: 16/9;
-        border-radius: 28px;
-      }
-      .hero__visual-chip { padding: var(--space-4) var(--space-5); }
-      .hero__visual-chip-avatar { width: 28px; height: 28px; }
-      .hero__visual-chip-label  { font-size: 13px; }
-      .hero__visual-chip-stars  { font-size: 11px; }
-      .hero__visual-years-number { font-size: 28px; }
-      .hero__visual-years-label  { font-size: 10px; }
-
-      /* CTAs — nebeneinander */
-      .hero__cta {
-        padding-left:  var(--space-8);
-        padding-right: var(--space-8);
-        padding-bottom: var(--space-12);
-        flex-direction: row;
-        gap: var(--space-4);
-      }
+      .cta-bar { padding-left: var(--space-8); padding-right: var(--space-8); gap: var(--space-4); }
       .btn-primary  { height: 56px; font-size: 16px; }
       .btn-secondary { height: 56px; font-size: 15px; }
     }
 
     /* ============================================================
-       UTILITY — prefers-reduced-motion
+       prefers-reduced-motion
     ============================================================ */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -556,22 +396,19 @@
 <body>
 
   <!-- =============================================
-       NAVIGATION
+       NAVIGATION — Light
   ============================================== -->
   <nav class="nav" role="navigation" aria-label="Hauptnavigation">
     <div class="nav__inner">
 
-      <!-- Logo -->
-      <a href="/" class="nav__logo" aria-label="Timmsen Dach — Startseite">
+      <a href="/" class="nav__logo" aria-label="Dachdeckerei Maik Timmsen — Startseite">
         <img
           src="assets/images/TimmsenLogo.png"
           alt="Dachdeckerei Maik Timmsen"
-          height="38"
-          style="height:38px; width:auto; display:block; filter: brightness(0) invert(1);"
+          height="36"
         />
       </a>
 
-      <!-- Hamburger -->
       <button
         class="nav__burger"
         id="navBurger"
@@ -588,7 +425,7 @@
     </div>
   </nav>
 
-  <!-- Mobile Drawer -->
+  <!-- Drawer -->
   <div class="nav__drawer" id="navDrawer" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
     <ul class="nav__drawer-links">
       <li><a href="pages/leistungen.html" onclick="toggleMenu()">Leistungen</a></li>
@@ -605,51 +442,51 @@
   </div>
 
   <!-- =============================================
-       HERO SECTION
+       HERO
   ============================================== -->
   <main id="main-content">
     <section class="hero" aria-labelledby="hero-headline">
 
-      <!-- Trust Bar -->
-      <div class="hero__trust" role="complementary" aria-label="Vertrauensbeweis">
-        <div class="hero__trust-dot" aria-hidden="true"></div>
-        <p class="hero__trust-text">Trusted by 150+ zufriedene Kunden in der Region</p>
-      </div>
+      <!-- 1. Hero Image — fullwidth, kein Radius, direkt unter Nav -->
+      <figure class="hero__visual" aria-label="Das Team der Dachdeckerei Maik Timmsen">
+        <img
+          src="assets/images/mannschaft.jpg"
+          alt="Das Team der Dachdeckerei Maik Timmsen"
+          width="810"
+          height="608"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
 
-      <!-- Text Content -->
+      <!-- 2. Text Content -->
       <div class="hero__content">
 
-        <!-- Badge -->
-        <div class="badge" aria-label="Kategorie: Dach & Bau Fachbetrieb">
+        <div class="badge" aria-label="Dach & Bau Fachbetrieb">
           <span class="badge__dot" aria-hidden="true"></span>
           Dach &amp; Bau Fachbetrieb
         </div>
 
-        <!-- H1 Headline -->
         <h1 class="hero__title" id="hero-headline">
           Ihr Dach in<br>
           besten Händen —<br>
           <em>Qualität seit 2010</em>
         </h1>
 
-        <!-- Subtext -->
         <p class="hero__sub">
-          Professionelle Dacharbeiten für Privat und Gewerbe. Termingerecht, sauber und mit 5 Jahren Garantie auf alle Ausführungen.
+          Professionelle Dacharbeiten für Privat und Gewerbe. Termingerecht, sauber und mit 5 Jahren Garantie.
         </p>
 
-        <!-- Features / Benefits -->
         <ul class="hero__features" aria-label="Unsere Leistungsmerkmale">
-
           <li class="hero__feature">
             <div class="hero__feature-icon" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20,6 9,17 4,12"/></svg>
             </div>
             <span class="hero__feature-text">
-              Kostenloser Vorab-Termin &amp; Angebot
+              Kostenloser Vorab-Termin
               <span> — binnen 24 Std.</span>
             </span>
           </li>
-
           <li class="hero__feature">
             <div class="hero__feature-icon" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20,6 9,17 4,12"/></svg>
@@ -659,7 +496,6 @@
               <span> auf alle Arbeiten</span>
             </span>
           </li>
-
           <li class="hero__feature">
             <div class="hero__feature-icon" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20,6 9,17 4,12"/></svg>
@@ -669,71 +505,38 @@
               <span> bei Sturmschäden</span>
             </span>
           </li>
-
         </ul>
+
       </div>
-
-      <!-- Visual / Foto -->
-      <figure class="hero__visual" aria-label="Referenzprojekt: Dachsanierung Einfamilienhaus">
-
-        <img
-          src="assets/images/mannschaft.jpg"
-          alt="Das Team der Dachdeckerei Maik Timmsen"
-          width="810"
-          height="608"
-          loading="eager"
-          fetchpriority="high"
-          style="width:100%; height:100%; object-fit:cover; object-position: center top;"
-        />
-
-        <!-- Floating: Kundenbewertung -->
-        <div class="hero__visual-chip" aria-label="Kundenbewertung: 4.9 von 5 Sternen">
-          <div class="hero__visual-chip-avatars" aria-hidden="true">
-            <div class="hero__visual-chip-avatar"></div>
-            <div class="hero__visual-chip-avatar"></div>
-            <div class="hero__visual-chip-avatar"></div>
-          </div>
-          <div class="hero__visual-chip-info">
-            <div class="hero__visual-chip-label">100+ Kunden</div>
-            <div class="hero__visual-chip-stars" aria-label="5 von 5 Sternen">★★★★★</div>
-          </div>
-        </div>
-
-        <!-- Floating: Erfahrung -->
-        <div class="hero__visual-years" aria-label="12 Jahre Erfahrung">
-          <div class="hero__visual-years-number" aria-hidden="true">12+</div>
-          <div class="hero__visual-years-label">Jahre</div>
-        </div>
-
-      </figure>
-
-      <!-- CTAs -->
-      <div class="hero__cta">
-        <a
-          href="pages/kontakt.html"
-          class="btn-primary"
-          aria-label="Jetzt kostenlos anfragen — Kontaktformular öffnen"
-        >
-          Kostenlos anfragen
-          <svg class="btn-primary__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12,5 19,12 12,19"/>
-          </svg>
-        </a>
-        <a
-          href="pages/leistungen.html"
-          class="btn-secondary"
-          aria-label="Alle Leistungen ansehen"
-        >
-          Leistungen ansehen
-        </a>
-      </div>
-
     </section>
   </main>
 
   <!-- =============================================
-       JAVASCRIPT — Menu Toggle
+       STICKY CTA BAR — fixed bottom
+  ============================================== -->
+  <div class="cta-bar" role="complementary" aria-label="Kontakt-Aktionen">
+    <a
+      href="pages/kontakt.html"
+      class="btn-primary"
+      aria-label="Jetzt kostenlos anfragen"
+    >
+      Kostenlos anfragen
+      <svg class="btn-primary__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+        <line x1="5" y1="12" x2="19" y2="12"/>
+        <polyline points="12,5 19,12 12,19"/>
+      </svg>
+    </a>
+    <a
+      href="pages/leistungen.html"
+      class="btn-secondary"
+      aria-label="Alle Leistungen ansehen"
+    >
+      Leistungen
+    </a>
+  </div>
+
+  <!-- =============================================
+       JAVASCRIPT
   ============================================== -->
   <script>
     const burger = document.getElementById('navBurger');
@@ -746,11 +549,9 @@
       drawer.classList.toggle('is-open', menuOpen);
       burger.setAttribute('aria-expanded', menuOpen);
       drawer.setAttribute('aria-hidden', !menuOpen);
-      // Prevent body scroll when menu open
       document.body.style.overflow = menuOpen ? 'hidden' : '';
     }
 
-    // Close on Escape
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && menuOpen) toggleMenu();
     });
