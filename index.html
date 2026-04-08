@@ -77,9 +77,18 @@
       width: 100%;
       max-width: 810px;
       z-index: 100;
-      background: var(--color-white);
+      background: #ffffff;
       border-bottom: 1px solid var(--color-border);
       padding: env(safe-area-inset-top, 0px) var(--space-5) 0;
+    }
+    /* Extend white bg above safe area on notch devices */
+    .nav::before {
+      content: '';
+      position: absolute;
+      top: calc(-1 * env(safe-area-inset-top, 0px));
+      left: 0; right: 0;
+      height: env(safe-area-inset-top, 0px);
+      background: #ffffff;
     }
     .nav__inner {
       display: flex;
